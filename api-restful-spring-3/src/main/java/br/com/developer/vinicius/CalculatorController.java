@@ -26,6 +26,7 @@ public class CalculatorController {
         }
         return convertToNumber(numberOne) - convertToNumber(numberTwo);
     }
+
     @RequestMapping(value = "/multiplication/{numberOne}/{numberTwo}", method = GET)
     public Double multiplication(@PathVariable(value = "numberOne") String numberOne,
                       @PathVariable(value = "numberTwo") String numberTwo) throws Exception {
@@ -33,6 +34,15 @@ public class CalculatorController {
             throw new UnsupportedMathOperationException("Please set a numeric value!");
         }
         return convertToNumber(numberOne) * convertToNumber(numberTwo);
+    }
+
+    @RequestMapping(value = "/division/{numberOne}/{numberTwo}", method = GET)
+    public Double division(@PathVariable(value = "numberOne") String numberOne,
+                      @PathVariable(value = "numberTwo") String numberTwo) throws Exception {
+        if (!isNumeric(numberOne) || !isNumeric(numberTwo)) {
+            throw new UnsupportedMathOperationException("Please set a numeric value!");
+        }
+        return convertToNumber(numberOne) / convertToNumber(numberTwo);
     }
 
     private boolean isNumeric(String strNumber) {

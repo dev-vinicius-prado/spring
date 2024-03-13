@@ -18,6 +18,14 @@ public class CalculatorController {
         }
         return convertToNumber(numberOne) + convertToNumber(numberTwo);
     }
+    @RequestMapping(value = "/subtraction/{numberOne}/{numberTwo}", method = GET)
+    public Double subtraction(@PathVariable(value = "numberOne") String numberOne,
+                      @PathVariable(value = "numberTwo") String numberTwo) throws Exception {
+        if (!isNumeric(numberOne) || !isNumeric(numberTwo)) {
+            throw new UnsupportedMathOperationException("Please set a numeric value!");
+        }
+        return convertToNumber(numberOne) - convertToNumber(numberTwo);
+    }
 
     private boolean isNumeric(String strNumber) {
         if (null == strNumber) {

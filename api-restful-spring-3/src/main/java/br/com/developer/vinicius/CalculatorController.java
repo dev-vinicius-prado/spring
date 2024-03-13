@@ -45,6 +45,14 @@ public class CalculatorController {
         return convertToNumber(numberOne) / convertToNumber(numberTwo);
     }
 
+    @RequestMapping(value = "/square-root/{numberOne}", method = GET)
+    public Double squareRoot(@PathVariable(value = "numberOne") String numberOne) throws Exception {
+        if (!isNumeric(numberOne)) {
+            throw new UnsupportedMathOperationException("Please set a numeric value!");
+        }
+        return Math.sqrt(convertToNumber(numberOne));
+    }
+
     private boolean isNumeric(String strNumber) {
         if (null == strNumber) {
             return false;

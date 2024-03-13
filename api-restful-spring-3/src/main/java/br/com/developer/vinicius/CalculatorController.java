@@ -5,6 +5,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import static br.com.developer.vinicius.converters.ConvertToNumberUtil.convertToNumber;
+import static br.com.developer.vinicius.converters.ConvertToNumberUtil.isNumeric;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
 @RestController
@@ -53,16 +55,5 @@ public class CalculatorController {
         return Math.sqrt(convertToNumber(numberOne));
     }
 
-    private boolean isNumeric(String strNumber) {
-        if (null == strNumber) {
-            return false;
-        }
-        String number = strNumber.replaceAll(",", ".");
-        return number.matches("[-+]?[0-9]*\\.?[0-9]+");
-    }
 
-    private Double convertToNumber(String strNumber) {
-        String number = strNumber.replaceAll(",", ".");
-        return Double.parseDouble(number);
-    }
 }

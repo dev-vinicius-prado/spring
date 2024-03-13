@@ -14,7 +14,7 @@ The following calculations are available:
 - Division (/division/{numberOne}/{numberTwo})
 - Square Root (/square-root/{numberOne})
 
-:🇧🇷:
+:brazil:
 
 Nesta branch, foi construido um serviço com endpoints para fazer calculos matematicos.
 

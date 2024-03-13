@@ -1,5 +1,6 @@
 package br.com.developer.vinicius;
 
+import br.com.developer.vinicius.exceptions.UnsupportedMathOperationException;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -13,7 +14,7 @@ public class CalculatorController {
     public Double sum(@PathVariable(value = "numberOne") String numberOne,
                       @PathVariable(value = "numberTwo") String numberTwo) throws Exception {
         if (!isNumeric(numberOne) || !isNumeric(numberTwo)) {
-            throw new Exception();
+            throw new UnsupportedMathOperationException("Please set a numeric value!");
         }
         return convertToNumber(numberOne) + convertToNumber(numberTwo);
     }

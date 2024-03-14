@@ -1,5 +1,6 @@
 package br.com.developer.vinicius;
 
+import br.com.developer.vinicius.calculations.MultiplicationCalculation;
 import br.com.developer.vinicius.calculations.SubtractionCalculation;
 import br.com.developer.vinicius.calculations.SumCalculation;
 import br.com.developer.vinicius.exceptions.UnsupportedMathOperationException;
@@ -14,14 +15,15 @@ import static org.springframework.web.bind.annotation.RequestMethod.GET;
 @RestController
 public class CalculatorController {
 
+    private MultiplicationCalculation multiplicationCalculation;
+    private SubtractionCalculation subtractionCalculation;
     private SumCalculation sumCalculation;
 
-    public CalculatorController(SumCalculation sumCalculation, SubtractionCalculation subtractionCalculation) {
+    public CalculatorController(SumCalculation sumCalculation, SubtractionCalculation subtractionCalculation, MultiplicationCalculation multiplicationCalculation) {
         this.sumCalculation = sumCalculation;
         this.subtractionCalculation = subtractionCalculation;
+        this.multiplicationCalculation = multiplicationCalculation;
     }
-
-    private SubtractionCalculation subtractionCalculation;
 
     @RequestMapping(value = "/sum/{numberOne}/{numberTwo}", method = GET)
     public Double sum(@PathVariable(value = "numberOne") String numberOne,
@@ -42,11 +44,11 @@ public class CalculatorController {
 
     @RequestMapping(value = "/multiplication/{numberOne}/{numberTwo}", method = GET)
     public Double multiplication(@PathVariable(value = "numberOne") String numberOne,
-                      @PathVariable(value = "numberTwo") String numberTwo) throws Exception {
+                                 @PathVariable(value = "numberTwo") String numberTwo) throws Exception {
         if (!isNumeric(numberOne) || !isNumeric(numberTwo)) {
             throw new UnsupportedMathOperationException("Please set a numeric value!");
         }
-        return convertToNumber(numberOne) * convertToNumber(numberTwo);
+        return multiplicationCalculation.calculate(convertToNumber(numberOne), convertToNumber(numberTwo));
     }
 
     @RequestMapping(value = "/division/{numberOne}/{numberTwo}", method = GET)

@@ -1,5 +1,6 @@
 package br.com.developer.vinicius;
 
+import br.com.developer.vinicius.calculations.SubtractionCalculation;
 import br.com.developer.vinicius.calculations.SumCalculation;
 import br.com.developer.vinicius.exceptions.UnsupportedMathOperationException;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,11 +13,15 @@ import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
 @RestController
 public class CalculatorController {
-    public CalculatorController(SumCalculation sumCalculation) {
-        this.sumCalculation = sumCalculation;
-    }
 
     private SumCalculation sumCalculation;
+
+    public CalculatorController(SumCalculation sumCalculation, SubtractionCalculation subtractionCalculation) {
+        this.sumCalculation = sumCalculation;
+        this.subtractionCalculation = subtractionCalculation;
+    }
+
+    private SubtractionCalculation subtractionCalculation;
 
     @RequestMapping(value = "/sum/{numberOne}/{numberTwo}", method = GET)
     public Double sum(@PathVariable(value = "numberOne") String numberOne,
@@ -32,7 +37,7 @@ public class CalculatorController {
         if (!isNumeric(numberOne) || !isNumeric(numberTwo)) {
             throw new UnsupportedMathOperationException("Please set a numeric value!");
         }
-        return convertToNumber(numberOne) - convertToNumber(numberTwo);
+        return subtractionCalculation.calculate(convertToNumber(numberOne), convertToNumber(numberTwo));
     }
 
     @RequestMapping(value = "/multiplication/{numberOne}/{numberTwo}", method = GET)

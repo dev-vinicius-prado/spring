@@ -1,9 +1,6 @@
 package br.com.developer.vinicius;
 
-import br.com.developer.vinicius.calculations.DivisionCalculation;
-import br.com.developer.vinicius.calculations.MultiplicationCalculation;
-import br.com.developer.vinicius.calculations.SubtractionCalculation;
-import br.com.developer.vinicius.calculations.SumCalculation;
+import br.com.developer.vinicius.calculations.*;
 import br.com.developer.vinicius.exceptions.UnsupportedMathOperationException;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,12 +17,14 @@ public class CalculatorController {
     private SubtractionCalculation subtractionCalculation;
     private SumCalculation sumCalculation;
     private DivisionCalculation divisionCalculation;
+    private SquareRootCalculation squareRootCalculation;
 
-    public CalculatorController(SumCalculation sumCalculation, SubtractionCalculation subtractionCalculation, MultiplicationCalculation multiplicationCalculation, DivisionCalculation divisionCalculation) {
+    public CalculatorController(SumCalculation sumCalculation, SubtractionCalculation subtractionCalculation, MultiplicationCalculation multiplicationCalculation, DivisionCalculation divisionCalculation, SquareRootCalculation squareRootCalculation) {
         this.sumCalculation = sumCalculation;
         this.subtractionCalculation = subtractionCalculation;
         this.multiplicationCalculation = multiplicationCalculation;
         this.divisionCalculation = divisionCalculation;
+        this.squareRootCalculation = squareRootCalculation;
     }
 
     @RequestMapping(value = "/sum/{numberOne}/{numberTwo}", method = GET)
@@ -68,7 +67,7 @@ public class CalculatorController {
         if (!isNumeric(numberOne)) {
             throw new UnsupportedMathOperationException("Please set a numeric value!");
         }
-        return Math.sqrt(convertToNumber(numberOne));
+        return squareRootCalculation.calculate(convertToNumber(numberOne), null);
     }
 
 

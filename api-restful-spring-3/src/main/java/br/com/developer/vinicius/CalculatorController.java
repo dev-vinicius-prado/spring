@@ -1,5 +1,6 @@
 package br.com.developer.vinicius;
 
+import br.com.developer.vinicius.calculations.DivisionCalculation;
 import br.com.developer.vinicius.calculations.MultiplicationCalculation;
 import br.com.developer.vinicius.calculations.SubtractionCalculation;
 import br.com.developer.vinicius.calculations.SumCalculation;
@@ -18,11 +19,13 @@ public class CalculatorController {
     private MultiplicationCalculation multiplicationCalculation;
     private SubtractionCalculation subtractionCalculation;
     private SumCalculation sumCalculation;
+    private DivisionCalculation divisionCalculation;
 
-    public CalculatorController(SumCalculation sumCalculation, SubtractionCalculation subtractionCalculation, MultiplicationCalculation multiplicationCalculation) {
+    public CalculatorController(SumCalculation sumCalculation, SubtractionCalculation subtractionCalculation, MultiplicationCalculation multiplicationCalculation, DivisionCalculation divisionCalculation) {
         this.sumCalculation = sumCalculation;
         this.subtractionCalculation = subtractionCalculation;
         this.multiplicationCalculation = multiplicationCalculation;
+        this.divisionCalculation = divisionCalculation;
     }
 
     @RequestMapping(value = "/sum/{numberOne}/{numberTwo}", method = GET)
@@ -53,11 +56,11 @@ public class CalculatorController {
 
     @RequestMapping(value = "/division/{numberOne}/{numberTwo}", method = GET)
     public Double division(@PathVariable(value = "numberOne") String numberOne,
-                      @PathVariable(value = "numberTwo") String numberTwo) throws Exception {
+                           @PathVariable(value = "numberTwo") String numberTwo) throws Exception {
         if (!isNumeric(numberOne) || !isNumeric(numberTwo)) {
             throw new UnsupportedMathOperationException("Please set a numeric value!");
         }
-        return convertToNumber(numberOne) / convertToNumber(numberTwo);
+        return divisionCalculation.calculate(convertToNumber(numberOne), convertToNumber(numberTwo));
     }
 
     @RequestMapping(value = "/square-root/{numberOne}", method = GET)
